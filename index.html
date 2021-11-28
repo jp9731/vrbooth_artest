@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+<script src="https://unpkg.com/aframe-chromakey-material/dist/aframe-chromakey-material.min.js"></script>
+<style>
+  .arjs-loader {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .arjs-loader div {
+    text-align: center;
+    font-size: 1.25em;
+    color: white;
+  }
+</style>
+<script type="text/javascript">
+  
+var sceneEl;
+ document.addEventListener("DOMContentLoaded", function() {
+   // var video = document.querySelector('#man1');
+    var cman = document.querySelector('#man1_op');
+    var start = document.querySelector('#start');
+    var stop = document.querySelector('#stop');
+
+    // Pause
+    //video.pause();
+    // Video
+    start.addEventListener('click', function () {
+      console.log("aaa")
+     // alert("aaa")
+        video.play();
+    })
+    stop.addEventListener('touchstart', function () {
+        video.pause();
+    })
+
+ sceneEl = document.querySelector('a-scene');
+
+
+})
+
+function select_man(tg){
+
+  let aplaneall = sceneEl.querySelectorAll('.a-pl');
+  for (var i = 0; i < aplaneall.length; i++) {
+  //console.log(aplaneall[i]);
+
+  aplaneall[i].setAttribute('scale', "0");
+
+}
+
+  let aplane = sceneEl.querySelector('#man'+tg+'_op');
+
+//aplane.setAttribute('material', "shader: chromakey; src: '#man'"+tg+"; color: 0.1 0.9 0.2");
+
+aplane.setAttribute('scale', "4.5 8");
+    
+let videoall = sceneEl.querySelectorAll('video');
+  for (var i = 0; i < videoall.length; i++) {
+  //console.log(videoall[i]);
+  videoall[i].removeAttribute('playsinline');
+  videoall[i].removeAttribute('webkit-playsinline');
+  videoall[i].pause();
+
+}
+
+       var video = document.querySelector('#man'+tg);
+       video.setAttribute('playsinline','')
+        video.play();
+
+
+
+}
+</script>
+<body style="margin : 0px; overflow: hidden;">
+
+ <!-- minimal loader shown until image descriptors are loaded -->
+   <!-- <div class="arjs-loader">
+    <div>Loading, please wait...</div>
+  </div> -->
+    <!-- <video id="man1" style="opacity: 0;" autoplay loop muted src="https://www.etudevirtual.com/kr/video/00.mp4"></video> -->
+<div style="z-index: 9000;width:16vw; height:18vh; position:absolute; left:2vw; bottom:5px; border:3px solid #fff; color:#fff; background-color: rgba(256,246,256,0.3); text-align:center; line-height: 18vh;" onclick="select_man('1')">1번</div>
+<div style="z-index: 9000;width:16vw; height:18vh; position:absolute; left:21.5vw; bottom:5px; border:3px solid #fff; color:#fff; background-color: rgba(256,246,256,0.3); text-align:center; line-height: 18vh;" onclick="select_man('2')">2번</div>
+<div style="z-index: 9000;width:16vw; height:18vh; position:absolute; left:41vw; bottom:5px; border:3px solid #fff; color:#fff; background-color: rgba(256,246,256,0.3); text-align:center; line-height: 18vh;" onclick="select_man('3')">3번</div>
+<div style="z-index: 9000;width:16vw; height:18vh; position:absolute; left:60.5vw; bottom:5px; border:3px solid #fff; color:#fff; background-color: rgba(256,246,256,0.3); text-align:center; line-height: 18vh;" onclick="select_man('4')">4번</div>
+<div style="z-index: 9000;width:16vw; height:18vh; position:absolute; left:80vw; bottom:5px; border:3px solid #fff; color:#fff; background-color: rgba(256,246,256,0.3); text-align:center; line-height: 18vh;" onclick="select_man('5')">5번</div>
+  <a-scene id="scene"
+    vr-mode-ui="enabled: false;"
+    
+    embedded
+    arjs="trackingMethod: best; "
+  >
+    <!-- we use cors proxy to avoid cross-origin problems -->
+    <!-- <a-nft
+      type="nft"
+      url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/trex-image/trex"
+      smooth="true"
+      smoothCount="10"
+      smoothTolerance=".01"
+      smoothThreshold="5"
+    >
+      <a-entity
+        gltf-model="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf"
+        scale="5 5 5"
+        position="50 150 0"
+      >
+      </a-entity>
+
+    </a-nft> -->
+
+    <a-assets>
+    <video id="man1" style="opacity: 0;" type="video/mp4" autoplay loop muted src="./00.mp4"></video>
+    <video id="man2" style="opacity: 0;" type="video/mp4" autoplay loop muted src="./01.mp4"></video>
+    <video id="man3" style="opacity: 0;" type="video/mp4" autoplay loop muted src="./03.mp4"></video>
+    <video id="man4" style="opacity: 0;" type="video/mp4" autoplay loop muted src="./04.mp4"></video>
+    <video id="man5" style="opacity: 0;" type="video/mp4" autoplay loop muted src="./05.mp4"></video>
+    
+  </a-assets>
+
+  <!-- Using the asset management system. -->
+  <a-plane id="man1_op" class="a-pl"
+        material="shader: chromakey; src: #man1; color: 0.1 0.9 0.2" 
+        position="0 0 -10" 
+        scale="0"
+      ></a-plane>
+
+  <a-plane id="man2_op" class="a-pl"
+        material="shader: chromakey; src: #man2; color: 0.1 0.9 0.2" 
+        position="0 0 -10" 
+        scale="0"
+      ></a-plane>    
+
+  <a-plane id="man3_op" class="a-pl"
+        material="shader: chromakey; src: #man3; color: 0.1 0.9 0.2" 
+        position="0 0 -10" 
+        scale="0"
+      ></a-plane>
+<a-plane id="man4_op" class="a-pl"
+        material="shader: chromakey; src: #man4; color: 0.1 0.9 0.2" 
+        position="0 0 -10" 
+        scale="0"
+      ></a-plane>
+      <a-plane id="man5_op" class="a-pl"
+        material="shader: chromakey; src: #man5; color: 0.1 0.9 0.2" 
+        position="0 0 -10" 
+        scale="0"
+      ></a-plane>
+<a-box id="stop" position="2 0 0" color="#FF0000"></a-box>
+<a-box id="start" position="-2 0 0" color="#00FF00"></a-box>
+    <a-entity camera></a-entity>
+  </a-scene>
+</body>
+</html>
